@@ -1,0 +1,104 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(early(addPluginSbtFile="""C:\Users\PC\AppData\Local\Temp\idea.sbt"""), None, None)
+[debug] > Exec(addPluginSbtFile="""C:\Users\PC\AppData\Local\Temp\idea.sbt""", None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.4.9 (AdoptOpenJDK Java 11.0.10)
+[debug]       Load.loadUnit: plugins took 608.2286ms
+[debug]       Load.loadUnit: defsScala took 1.12ms
+[debug] [Loading] Scanning directory C:\Users\PC\.sbt\1.0\plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\PC\.sbt\1.0\plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 164.7717 ms
+[debug]           Load.resolveProject(global-plugins) took 233.4194ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: C:\Users\PC\.sbt\1.0\plugins, plugins: List(<none>))) took 565.1369ms
+[debug] [Loading] Done in C:\Users\PC\.sbt\1.0\plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 677.2488ms
+[debug]       Load.loadUnit: cleanEvalClasses took 1.7608ms
+[debug]     Load.loadUnit(file:/C:/Users/PC/.sbt/1.0/plugins/, ...) took 1365.1267ms
+[debug]   Load.apply: load took 3302.4701ms
+[debug]   Load.apply: resolveProjects took 98.4708ms
+[debug]   Load.apply: finalTransforms took 653.331ms
+[debug]   Load.apply: config.delegates took 71.8319ms
+[debug]   Load.apply: Def.make(settings)... took 8950.8493ms
+[debug]   Load.apply: structureIndex took 438.9643ms
+[debug]   Load.apply: mkStreams took 4.9511ms
+[info] loading global plugins from C:\Users\PC\.sbt\1.0\plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 47925.4316ms
+[debug]           Load.loadUnit: plugins took 101.6023ms
+[debug]           Load.loadUnit: defsScala took 0.0118ms
+[debug] [Loading] Scanning directory G:\N2M Solution\Anjos\ExempleSparkETL\project
+[debug]             Load.loadUnit: mkEval took 42.9543ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL\project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 5.6047 ms
+[info] loading settings for project exemplesparketl-build from idea.sbt ...
+[debug]               Load.resolveProject(exemplesparketl-build) took 30.0633ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id exemplesparketl-build, base: G:\N2M Solution\Anjos\ExempleSparkETL\project, plugins: List(<none>))) took 37.3298ms
+[debug] [Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL\project, returning: (exemplesparketl-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 8206.4633ms
+[debug]           Load.loadUnit: cleanEvalClasses took 11.3867ms
+[debug]         Load.loadUnit(file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/project/, ...) took 8321.9877ms
+[debug]       Load.apply: load took 8326.2742ms
+[debug]       Load.apply: resolveProjects took 0.2859ms
+[debug]       Load.apply: finalTransforms took 61.4398ms
+[debug]       Load.apply: config.delegates took 1.5805ms
+[debug]       Load.apply: Def.make(settings)... took 255.3053ms
+[debug]       Load.apply: structureIndex took 131.2281ms
+[debug]       Load.apply: mkStreams took 0.0059ms
+[info] loading project definition from G:\N2M Solution\Anjos\ExempleSparkETL\project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
+[debug]     Load.loadUnit: plugins took 11855.6186ms
+[debug]     Load.loadUnit: defsScala took 0.0268ms
+[debug] [Loading] Scanning directory G:\N2M Solution\Anjos\ExempleSparkETL
+[debug]       Load.loadUnit: mkEval took 0.6273ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.StructurePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.IdeaShellPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.StructurePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.IdeaShellPlugin))), Clause(And(Set(Atom(sbt.plugins.CorePlugin), Atom(sbt.plugins.JvmPlugin))),Set(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.SemanticdbPlugin,org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin,sbt.plugins.JUnitXmlReportPlugin,org.jetbrains.sbt.IdeaShellPlugin,org.jetbrains.sbt.StructurePlugin,sbt.plugins.MiniDependencyTreePlugin)
+[debug] Plugins.deducer#function took 11.6911 ms
+[info] loading settings for project exemplesparketl from build.sbt ...
+[debug]         Load.resolveProject(exemplesparketl) took 280.3357ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id exemplesparketl, base: G:\N2M Solution\Anjos\ExempleSparkETL, plugins: List(<none>))) took 296.9404ms
+[debug] [Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL, returning: (exemplesparketl)
+[debug]     Load.loadUnit: loadedProjectsRaw took 9710.4772ms
+[debug]     Load.loadUnit: cleanEvalClasses took 53.8382ms
+[debug]   Load.loadUnit(file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/, ...) took 21622.1747ms
+[debug] Load.apply: load took 21630.6623ms
+[debug] Load.apply: resolveProjects took 0.7632ms
+[debug] Load.apply: finalTransforms took 121.2361ms
+[debug] Load.apply: config.delegates took 10.2448ms
+[debug] Load.apply: Def.make(settings)... took 446.6204ms
+[debug] Load.apply: structureIndex took 75.8498ms
+[debug] Load.apply: mkStreams took 0.0064ms
+[info] set current project to SparkETL (in build file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(; set ideaPort in Global := 51329 ; idea-shell, None, None)
+[debug] > Exec(set ideaPort in Global := 51329, None, None)
+[info] Defining Global / ideaPort
+[info] The new value will be used by Compile / compile, Test / compile
+[debug] Defining 
+[debug] 	Global / ideaPort
+[debug] 
+[debug] The new value will be used by 
+[debug] 	Compile / compile
+[debug] 	Test / compile
+[info] Reapplying settings...
+[info] set current project to SparkETL (in build file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/)
+[debug] > Exec(idea-shell, None, None)

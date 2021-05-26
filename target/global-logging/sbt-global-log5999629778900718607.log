@@ -1,0 +1,83 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(early(addDefaultCommands), None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(addDefaultCommands, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(early(initialize), None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(initialize, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(boot, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(writeSbtVersion, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(reload, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtStashOnFailure, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(onFailure loadFailed, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(loadp, None, None)[0m
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.4.3 (AdoptOpenJDK Java 1.8.0_282)[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.defaultLoad until apply took 1138.2764ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: plugins took 570.0486ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: defsScala took 1.0645ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Scanning directory G:\N2M Solution\Anjos\ExempleSparkETL\project[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Found non-root projects [0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL\project, returning: ()[0m
+[0m[[0m[0mdebug[0m] [0m[0mdeducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))[0m
+[0m[[0m[0mdebug[0m] [0m[0m  :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)[0m
+[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 70.6051 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m              Load.resolveProject(exemplesparketl-build) took 130.5157ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m            Load.loadTransitive: finalizeProject(Project(id exemplesparketl-build, base: G:\N2M Solution\Anjos\ExempleSparkETL\project, plugins: List(<none>))) took 299.7876ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL\project, returning: (exemplesparketl-build)[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: loadedProjectsRaw took 366.9586ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: cleanEvalClasses took 0.7866ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m        Load.loadUnit(file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/project/, ...) took 957.2206ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: load took 1314.8418ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: resolveProjects took 20.9668ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: finalTransforms took 178.25ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: config.delegates took 17.8915ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: Def.make(settings)... took 2719.5755ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: structureIndex took 321.192ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: mkStreams took 5.0618ms[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from G:\N2M Solution\Anjos\ExempleSparkETL\project[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: plugins took 6974.1007ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: defsScala took 0.0099ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Scanning directory G:\N2M Solution\Anjos\ExempleSparkETL[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: mkEval took 20.6762ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Found non-root projects [0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL, returning: ()[0m
+[0m[[0m[0mdebug[0m] [0m[0mdeducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))[0m
+[0m[[0m[0mdebug[0m] [0m[0m  :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)[0m
+[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 5.9469 ms[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project exemplesparketl from build.sbt ...[0m
+[0m[[0m[0mdebug[0m] [0m[0m        Load.resolveProject(exemplesparketl) took 12.3572ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadTransitive: finalizeProject(Project(id exemplesparketl, base: G:\N2M Solution\Anjos\ExempleSparkETL, plugins: List(<none>))) took 19.8885ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in G:\N2M Solution\Anjos\ExempleSparkETL, returning: (exemplesparketl)[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: loadedProjectsRaw took 425.332ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: cleanEvalClasses took 21.1619ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.loadUnit(file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/, ...) took 7424.5656ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: load took 7491.0404ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: resolveProjects took 0.3607ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: finalTransforms took 30.7668ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: config.delegates took 0.8311ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: Def.make(settings)... took 367.3385ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: structureIndex took 99.816ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: mkStreams took 0.0054ms[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to SparkETL (in build file:/G:/N2M%20Solution/Anjos/ExempleSparkETL/)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtPopOnFailure, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(resumeFromFailure, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(notifyUsersAboutShell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(iflast shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to G:\N2M Solution\Anjos\ExempleSparkETL\target\scala-2.12\classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
+[0m[[0m[31merror[0m] [0m[0mjava.util.concurrent.RejectedExecutionException[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.ConcurrentRestrictions$$anon$4.submit(ConcurrentRestrictions.scala:242)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.submit(Execute.scala:282)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.ready(Execute.scala:262)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.notifyDone(Execute.scala:201)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.$anonfun$retire$2(Execute.scala:172)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.$anonfun$retire$2$adapted(Execute.scala:171)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:431)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.retire(Execute.scala:171)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.$anonfun$work$2(Execute.scala:299)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute$$anon$1.process(Execute.scala:27)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.next$1(Execute.scala:117)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.processAll(Execute.scala:127)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Execute.runKeep(Execute.scala:95)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.EvaluateTask$.liftedTree1$1(EvaluateTask.scala:476)[0m
