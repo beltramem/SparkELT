@@ -2,6 +2,7 @@
 sbt clean compile
 
 # Pour exécuter le projet
-sbt run
+sbt -J-Xmx30g "run datedebut datefin"
+
 
 
