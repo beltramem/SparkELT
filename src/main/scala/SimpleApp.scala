@@ -713,17 +713,17 @@ object SimpleApp extends Serializable {
 
 			extractGostValue(date)
 
-			if(fileCaisson.length>0) {
+			/*if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
 			}
 
 			if(fileStation.length>0) {
 				extractStation(fileStation(0))
-			}
+			}*/
 
 			transformeLoadLogement(date)
-			transformeLoadStation(date)
-			transformeLoadCaisson(date)
+			/*transformeLoadStation(date)
+			transformeLoadCaisson(date)*/
 
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
