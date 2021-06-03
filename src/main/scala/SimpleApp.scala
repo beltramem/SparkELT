@@ -311,13 +311,16 @@ object SimpleApp extends Serializable {
 				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
 
 				mesurecols -= "date"
+				mesurecols -= "id"
 
 				for (colname <- mesurecols) {
 					mesure = supprErreur(mesure, colname)
 				}
 
+				mesure.show(1);
 
 				if (mesure.count() >= 0) {
+
 					import spark.implicits._
 					mesure = mesure.mapPartitions(iterator => {
 						var statement = getConnection(url, connectionProperties)
