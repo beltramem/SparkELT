@@ -700,6 +700,7 @@ object SimpleApp extends Serializable {
 		var date = dateMin
 		var dateString = formatString.format(date)
 		val c = Calendar.getInstance
+		c.setTime(date)
 		while (date != dateMax) {
 
 			val fileCapteur= filelist.filter(f => (""".+(162|093|088|182)+ le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
