@@ -58,14 +58,27 @@ object SimpleApp extends Serializable {
 	{
 		val temperature = 0.01 * brut - fct
 		  temperature
-
 	}
+
+	def calculTemperatureMoyenne(capteur: String,statement: Statement): Double =
+	{
+		val temperature= statement.executeQuery("select avg(temperature) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement").getDouble(0)
+		temperature
+	}
+
 
 	def calculHr(brut: Double, temperature: Double ): Double =
 	{
 		val hr = (temperature-25)*(0.01+(0.00008*brut))+(0.0405*brut)+((-0.0000028)*(brut*brut))-4
 		hr
 	}
+
+	def calculHrMoyen(capteur: String,statement: Statement): Double =
+	{
+		val hr= statement.executeQuery("select avg(hr) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement").getDouble(0)
+		hr
+	}
+
 
 	def calculDebitPosition1(brut: Double,fct : Double): Double =
 	{
@@ -326,6 +339,7 @@ object SimpleApp extends Serializable {
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
 							val capteur = row.getString(6)
+							val reel = row.getBoolean(11)
 							val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' ) """)
 							resultSetTemp.first()
 							val fctTemp = resultSetTemp.getDouble("fct1")
@@ -335,12 +349,25 @@ object SimpleApp extends Serializable {
 								fctDp1 = resultSetDp1.getDouble("fct1")
 							}
 							val typeCapteur = getCapteurType(statement, capteur)
+							var temperature =0.0
+							var hr=0.0
+							var dpo1=0.0
+							var dpe1=0.0
+							var co2=0.0
+							if(reel==true) {
+								temperature = calculTemperature(row.getDouble(1), fctTemp)
+								 hr = calculHr(row.getDouble(2), temperature)
+								dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1)
+								dpe1 = calculDebitPression1(row.getDouble(4))
+								co2 = calculCo2(row.getDouble(5), typeCapteur)
+							}
+							else
+								{
+									temperature = calculTemperatureMoyenne(capteur,statement)
+									hr = calculHrMoyen(capteur,statement)
+								}
 
-							val temperature = calculTemperature(row.getDouble(1), fctTemp)
-							val hr = calculHr(row.getDouble(2), temperature)
-							val dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1)
-							val dpe1 = calculDebitPression1(row.getDouble(4))
-							val co2 = calculCo2(row.getDouble(5), typeCapteur)
+
 							val resultSetdp2 = statement.executeQuery(s"""(select fct1,fct2,fct3,fct4,borne_inf,borne_sup,valeur_defaut from facteur_debit_position2 where capteur_facteur='${capteur}' ) """)
 
 							val dpo2 = calculDebitPosition2(dpo1, row.getDouble(3), resultSetdp2, typeCapteur)
@@ -460,6 +487,8 @@ object SimpleApp extends Serializable {
 				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
 
 				mesurecols -= "date"
+				mesurecols -= "id"
+
 
 				for (colname <- mesurecols) {
 					mesure = supprErreur(mesure, colname)
@@ -516,6 +545,7 @@ object SimpleApp extends Serializable {
 				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
 
 				mesurecols -= "date"
+				mesurecols -= "id"
 
 				for (colname <- mesurecols) {
 					mesure = supprErreur(mesure, colname)
@@ -713,17 +743,17 @@ object SimpleApp extends Serializable {
 
 			extractGostValue(date)
 
-			/*if(fileCaisson.length>0) {
+			if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
 			}
 
 			if(fileStation.length>0) {
 				extractStation(fileStation(0))
-			}*/
+			}
 
 			transformeLoadLogement(date)
-			/*transformeLoadStation(date)
-			transformeLoadCaisson(date)*/
+			transformeLoadStation(date)
+			transformeLoadCaisson(date)
 
 			println("date"+date)
 			println("dateMax"+dateMax)
