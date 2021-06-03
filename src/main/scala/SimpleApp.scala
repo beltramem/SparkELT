@@ -725,7 +725,8 @@ object SimpleApp extends Serializable {
 			/*transformeLoadStation(date)
 			transformeLoadCaisson(date)*/
 
-			println("CA MARCµHE PAS"+date);
+			println("date"+date)
+			println("dateMax"+dateMax)
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
 			date = c.getTime()
