@@ -700,19 +700,18 @@ object SimpleApp extends Serializable {
 		var date = dateMin
 		var dateString = formatString.format(date)
 		val c = Calendar.getInstance
-		c.setTime(date)
 		while (date != dateMax) {
 
 			val fileCapteur= filelist.filter(f => (""".+(162|093|088|182)+ le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileCaisson= filelist.filter(f => ("""caisson+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileStation= filelist.filter(f => ("""Station météo+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 
-			/*for (file <- fileCapteur)
+			for (file <- fileCapteur)
 			{
 				extractLogement(file)
-			}*/
+			}
 
-			//extractGostValue(date)
+			extractGostValue(date)
 
 			/*if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
@@ -722,7 +721,7 @@ object SimpleApp extends Serializable {
 				extractStation(fileStation(0))
 			}*/
 
-			//transformeLoadLogement(date)
+			transformeLoadLogement(date)
 			/*transformeLoadStation(date)
 			transformeLoadCaisson(date)*/
 
