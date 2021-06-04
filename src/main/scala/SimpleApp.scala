@@ -356,7 +356,7 @@ object SimpleApp extends Serializable {
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-							println("capteur date =========================================="+capteur+date)
+							println("capteur date =========================================="+capteur+row.getTimestamp(0))
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
@@ -749,7 +749,7 @@ object SimpleApp extends Serializable {
 		val c = Calendar.getInstance
 		while (date != dateMax) {
 
-			val fileCapteur= filelist.filter(f => (""".+(162|093|088|182)+ le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
+			val fileCapteur= filelist.filter(f => (""".+(162|093|088|182|177|223)+ le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileCaisson= filelist.filter(f => ("""caisson+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileStation= filelist.filter(f => ("""Station météo+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 
