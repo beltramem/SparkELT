@@ -730,7 +730,8 @@ object SimpleApp extends Serializable {
 			calAddOneDay.setTime(date)
 			calAddOneDay.add(Calendar.DATE,1)
 			val dateMax = calAddOneDay.getTime()*/
-			val dateMax = "2008-01-02 00:00:00.0"
+			val format = new java.text.SimpleDateFormat("yyyy-MM-dd")
+			val dateMax = format.parse("2008-01-02 00:00:00.0")
 
 			var brut = spark.createDataFrame(spark.sparkContext.emptyRDD[Row], schmBrut)
 			brut = brut.withColumn("date", to_timestamp(col("date")))
