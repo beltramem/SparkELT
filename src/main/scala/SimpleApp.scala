@@ -329,8 +329,9 @@ object SimpleApp extends Serializable {
 
 		def transformeLoadLogement(date: Date):Unit =
 		{
-				var query = s"""(select * from brut_logement bl join capteur cp on bl.capteur = cp.id_capteur  where date >= timestamp '${date}' - interval '1 minute' and date <  timestamp '${date}' + interval '1 day') as brut"""
+				var query = s"""(select * from brut_logement bl join capteur cp on bl.capteur = cp.id_capteur  where date >= timestamp '${date}' - interval '1 minute' and date <  timestamp '${date}' + interval '1 day' order by date,capteur) as brut"""
 				var mesure = spark.read.jdbc(url, query, connectionProperties)
+
 
 
 			if(mesure.count()>0) {
@@ -356,7 +357,7 @@ object SimpleApp extends Serializable {
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-							println("capteur date =========================================="+capteur+row.getTimestamp(0))
+							println("capteur date =========================================="+capteur+row.getTimestamp(0)+mesure.count())
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
