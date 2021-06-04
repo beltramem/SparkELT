@@ -701,7 +701,6 @@ object SimpleApp extends Serializable {
 
 			var date = dateDebut
 			var timestamp = new Timestamp(date.getTime)
-			var test=0
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
 			val calAddoneMin = Calendar.getInstance
 
@@ -712,7 +711,6 @@ object SimpleApp extends Serializable {
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
-				test = test+1
 				calAddoneMin.setTime(date)
 				calAddoneMin.add(Calendar.MINUTE,1)
 				date = calAddoneMin.getTime()
@@ -720,7 +718,7 @@ object SimpleApp extends Serializable {
 			}
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
 			df = df.withColumn("date", to_timestamp(col("date")))
-			df
+			df.show(1440)
 		}
 
 		def extractGostValue(date: Date): Unit =
