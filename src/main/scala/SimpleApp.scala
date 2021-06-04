@@ -700,18 +700,18 @@ object SimpleApp extends Serializable {
 		{
 
 			var date = dateDebut
-			val c = Calendar.getInstance
+			val calAddoneMin = Calendar.getInstance
 			var timestamp = new Timestamp(date.getTime)
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
-			c.setTime(date)
-			c.add(Calendar.MINUTE,1)
-			date = c.getTime()
+			calAddoneMin.setTime(date)
+			calAddoneMin.add(Calendar.MINUTE,1)
+			date = calAddoneMin.getTime()
 			while (date != dateFin) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
-				c.setTime(date)
-				c.add(Calendar.MINUTE,1)
-				date = c.getTime()
+				calAddoneMin.setTime(date)
+				calAddoneMin.add(Calendar.MINUTE,1)
+				date = calAddoneMin.getTime()
 				println(date)
 			}
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
@@ -774,7 +774,7 @@ object SimpleApp extends Serializable {
 				extractLogement(file)
 			}
 
-			//extractGostValue(date)
+			extractGostValue(date)
 
 			if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
