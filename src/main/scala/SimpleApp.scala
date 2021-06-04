@@ -80,9 +80,12 @@ object SimpleApp extends Serializable {
 	}
 
 
-	def calculDebitPosition1(brut: Double,fct : Double): Double =
+	def calculDebitPosition1(brut: Double,fct : Double, piece : String): Double =
 	{
-		val dp1= (brut/1023)*2.5-fct
+		var dp1=0.0
+		if(!piece.contains("WC")) {
+			dp1 = (brut / 1023) * 2.5 - fct
+		}
 		dp1
 	}
 
@@ -103,25 +106,32 @@ object SimpleApp extends Serializable {
 	}
 
 
-	def calculDebitPosition2(brut: Double, Dppoint: Double, rs: ResultSet,ty: String): Double =
+	def calculDebitPosition2(brut: Double, Dppoint: Double, hr: Double, rs: ResultSet,reel: Boolean, piece : String): Double =
 	{
 
 		var dp2 = 0.0
+		if(!piece.contains("WC")) {
 			while (rs.next()) {
-			if (Dppoint >= rs.getDouble("borne_inf") && Dppoint < rs.getDouble(("borne_sup"))) {
-					if (rs.getDouble("valeur_defaut") <= 0 ) {
+				if (Dppoint >= rs.getDouble("borne_inf") && Dppoint < rs.getDouble(("borne_sup"))) {
+					if (rs.getDouble("valeur_defaut") <= 0) {
 						val fct1 = rs.getDouble("fct1")
 						val fct2 = rs.getDouble("fct2")
-						val fct3 = rs.getDouble("fct3")
-						val fct4 = rs.getDouble("fct4")
-						dp2 = fct1 + fct2 * brut + fct3 * math.pow(brut, 2) + fct4 * math.pow(brut, 3)
+						if (reel == true) {
 
+							val fct3 = rs.getDouble("fct3")
+							val fct4 = rs.getDouble("fct4")
+							dp2 = fct1 + fct2 * brut + fct3 * math.pow(brut, 2) + fct4 * math.pow(brut, 3)
+						}
+						else {
+							dp2 = fct1 * hr + fct2
+						}
 					}
 					else {
 						dp2 = rs.getDouble("valeur_defaut")
 					}
 				}
 			}
+		}
 			dp2
 	}
 
@@ -141,10 +151,10 @@ object SimpleApp extends Serializable {
 		dp2
 	}
 
-	def calculDebitProduit(dpr2: Double, dp2 : Double, capteurType : String): Double=
+	def calculDebitProduit(dpr2: Double, dp2 : Double, capteurType : String,piece: String): Double=
 	{
 		var dpro =0.0
-		if(capteurType=="Bouche")
+		if(capteurType=="Bouche" && !piece.contains("WC"))
 		{
 			dpro = (1+dpr2)*dp2
 		}
@@ -340,6 +350,7 @@ object SimpleApp extends Serializable {
 						val res = iterator.map(row => {
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
+							val piece = row.getString(9)
 							val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' ) """)
 							resultSetTemp.first()
 							val fctTemp = resultSetTemp.getDouble("fct1")
@@ -357,7 +368,7 @@ object SimpleApp extends Serializable {
 							if(reel==true) {
 								temperature = calculTemperature(row.getDouble(1), fctTemp)
 								 hr = calculHr(row.getDouble(2), temperature)
-								dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1)
+								dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1, piece)
 								dpe1 = calculDebitPression1(row.getDouble(4))
 								co2 = calculCo2(row.getDouble(5), typeCapteur)
 							}
@@ -370,10 +381,10 @@ object SimpleApp extends Serializable {
 
 							val resultSetdp2 = statement.executeQuery(s"""(select fct1,fct2,fct3,fct4,borne_inf,borne_sup,valeur_defaut from facteur_debit_position2 where capteur_facteur='${capteur}' ) """)
 
-							val dpo2 = calculDebitPosition2(dpo1, row.getDouble(3), resultSetdp2, typeCapteur)
+							val dpo2 = calculDebitPosition2(dpo1, row.getDouble(3), hr, resultSetdp2, reel, piece)
 							val resultSetDpe2 = statement.executeQuery(s"""(select fct1,fct2,fct3,borne_inf,borne_sup from facteur_debit_pression2 where capteur_facteur='${capteur}' )order by borne_inf """)
 							val dpe2 = calculDebitPression2(row.getDouble(3), dpe1, resultSetDpe2, typeCapteur)
-							val dp = calculDebitProduit(dpe2, dpo2, typeCapteur)
+							val dp = calculDebitProduit(dpe2, dpo2, typeCapteur, piece)
 							val ha = calculHumiditeAbsolue(hr, temperature)
 							val seq = calculSEQ(dp, typeCapteur)
 							val Séqlogement = 0.0
