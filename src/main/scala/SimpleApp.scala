@@ -388,8 +388,8 @@ object SimpleApp extends Serializable {
 							}
 							else
 								{
-									temperature = calculTemperatureMoyenne(capteur,statement)
-									hr = calculHrMoyen(capteur,statement)
+									//temperature = calculTemperatureMoyenne(capteur,statement)
+									//hr = calculHrMoyen(capteur,statement)
 								}
 
 
