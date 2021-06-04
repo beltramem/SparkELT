@@ -352,10 +352,15 @@ object SimpleApp extends Serializable {
 				if (mesure.count() >= 0) {
 					println("=============================================================================================================================================================================="+mesure.count())
 					import spark.implicits._
+					var partition =0
+
 					mesure = mesure.mapPartitions(iterator => {
+						partition+1
+						var rowbn =0
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
-
+							rowbn+1
+							println("############################################################## partition row"+partition+" "+rowbn)
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
