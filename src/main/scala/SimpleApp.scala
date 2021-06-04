@@ -413,7 +413,7 @@ object SimpleApp extends Serializable {
 						res
 					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue")
 
-					mesure = mesure.repartition(5)
+					//mesure = mesure.repartition(5)
 
 
 					// ATTENTION CA MARCHE UN PEU
@@ -422,12 +422,12 @@ object SimpleApp extends Serializable {
 					gb = gb.withColumnRenamed("logement", "logement_gb").withColumnRenamed("date", "date_gb")
 
 
-					mesure= mesure.repartition(5)
+					//mesure= mesure.repartition(5)
 
 					mesure = mesure.join(gb, mesure("logement") === gb("logement_gb") && mesure("date") === gb("date_gb"), "inner")
 					mesure = mesure.withColumn("somme_debits_extraits", when(col("type") === "Bouche", col("sum(debit_produit)")).otherwise(0.0)).drop("sum(debit_produit)")
 
-					mesure = mesure.repartition(5)
+					//mesure = mesure.repartition(5)
 					println("========================================================================== fin  calcul somme debits extraits")
 
 					gb = mesure.groupBy("logement", "date").sum("surface_equivalente_ea").orderBy("date")
@@ -707,6 +707,7 @@ object SimpleApp extends Serializable {
 
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
+			date = calAddoneMin.getTime()
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
