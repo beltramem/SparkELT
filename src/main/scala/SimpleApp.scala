@@ -709,7 +709,7 @@ object SimpleApp extends Serializable {
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
 			date = calAddoneMin.getTime()*/
-			while (test!=86400) {
+			while (test!=1440) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
 				test = test+1
