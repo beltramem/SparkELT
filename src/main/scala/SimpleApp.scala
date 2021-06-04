@@ -348,7 +348,7 @@ object SimpleApp extends Serializable {
 				mesure.show(1);
 
 				if (mesure.count() >= 0) {
-
+					println("=============================================================================================================================================================================="+mesure.count())
 					import spark.implicits._
 					mesure = mesure.mapPartitions(iterator => {
 						var statement = getConnection(url, connectionProperties)
@@ -357,7 +357,7 @@ object SimpleApp extends Serializable {
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-							println("capteur date =========================================="+capteur+row.getTimestamp(0)+mesure.count())
+							println("capteur date =========================================="+capteur+row.getTimestamp(0))
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
