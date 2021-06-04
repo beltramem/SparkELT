@@ -368,7 +368,6 @@ object SimpleApp extends Serializable {
 							var dpe1=0.0
 							var co2=0.0
 							if(reel==true) {
-								println("capteur ================================================="+capteur)
 								val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
 								resultSetTemp.first()
 								val fctTemp = resultSetTemp.getDouble("fct1")
@@ -772,8 +771,6 @@ object SimpleApp extends Serializable {
 			transformeLoadStation(date)
 			transformeLoadCaisson(date)
 
-			println("date"+date)
-			println("dateMax"+dateMax)
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
 			date = c.getTime()
