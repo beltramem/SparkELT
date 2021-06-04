@@ -774,7 +774,7 @@ object SimpleApp extends Serializable {
 				extractLogement(file)
 			}
 
-			extractGostValue(date)
+			//extractGostValue(date)
 
 			if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
