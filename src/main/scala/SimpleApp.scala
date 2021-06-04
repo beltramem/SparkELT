@@ -350,54 +350,62 @@ object SimpleApp extends Serializable {
 				mesure.repartition(1)
 
 				if (mesure.count() >= 0) {
-					println("=============================================================================================================================================================================="+mesure.count())
-					import spark.implicits._
-					var partition =0
 
+					import spark.implicits._
 					mesure = mesure.mapPartitions(iterator => {
-						partition = partition+1
-						var rowbn =0
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
-							rowbn = rowbn+1
-							//println("############################################################## partition row"+partition+" "+rowbn)
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-							println("capteur date =========================================="+capteur+row.getTimestamp(0))
+							var temperature =0.0
+							var hr=0.0
+							if(reel==true) {
+								val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
+								resultSetTemp.first()
+								val fctTemp = resultSetTemp.getDouble("fct1")
+								temperature = calculTemperature(row.getDouble(1), fctTemp)
+								hr = calculHr(row.getDouble(2), temperature)
+							}
+
+							(capteur, row.getString(8),row.getString(10), row.getTimestamp(0), temperature, hr, row.getDouble(3), row.getDouble(4), row.getDouble(5), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,piece,reel)
+
+						})
+						res
+					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue","piece","reel")
+
+
+
+					import spark.implicits._
+					mesure = mesure.mapPartitions(iterator => {
+						var statement = getConnection(url, connectionProperties)
+						val res = iterator.map(row => {
+							//println("############################################################## partition row"+partition+" "+rowbn)
+							val capteur = row.getString(0)
+							val reel = row.getBoolean(19)
+							val piece = row.getString(18)
+							val temperature = row.getDouble(4)
+							val hr = row.getDouble(5)
+							println("capteur date =========================================="+capteur+row.getTimestamp(3))
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
 								fctDp1 = resultSetDp1.getDouble("fct1")
 							}
 							val typeCapteur = getCapteurType(statement, capteur)
-							var temperature =0.0
-							var hr=0.0
 							var dpo1=0.0
 							var dpe1=0.0
 							var co2=0.0
 							if(reel==true) {
-								val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
-								resultSetTemp.first()
-								val fctTemp = resultSetTemp.getDouble("fct1")
-								temperature = calculTemperature(row.getDouble(1), fctTemp)
-								 hr = calculHr(row.getDouble(2), temperature)
-								dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1, piece)
-								dpe1 = calculDebitPression1(row.getDouble(4))
-								co2 = calculCo2(row.getDouble(5), typeCapteur)
+								dpo1 = calculDebitPosition1(row.getDouble(6), fctDp1, piece)
+								dpe1 = calculDebitPression1(row.getDouble(7))
+								co2 = calculCo2(row.getDouble(8), typeCapteur)
 							}
-							else
-								{
-									//temperature = calculTemperatureMoyenne(capteur,statement)
-									//hr = calculHrMoyen(capteur,statement)
-								}
-
-
 							val resultSetdp2 = statement.executeQuery(s"""(select fct1,fct2,fct3,fct4,borne_inf,borne_sup,valeur_defaut from facteur_debit_position2 where capteur_facteur='${capteur}' ) """)
 
-							val dpo2 = calculDebitPosition2(dpo1, row.getDouble(3), hr, resultSetdp2, reel, piece)
+							val dpo2 = calculDebitPosition2(dpo1, row.getDouble(6), hr, resultSetdp2, reel, piece)
 							val resultSetDpe2 = statement.executeQuery(s"""(select fct1,fct2,fct3,borne_inf,borne_sup from facteur_debit_pression2 where capteur_facteur='${capteur}' )order by borne_inf """)
-							val dpe2 = calculDebitPression2(row.getDouble(3), dpe1, resultSetDpe2, typeCapteur)
+							val dpe2 = calculDebitPression2(row.getDouble(6), dpe1, resultSetDpe2, typeCapteur)
 							val dp = calculDebitProduit(dpe2, dpo2, typeCapteur, piece)
 							val ha = calculHumiditeAbsolue(hr, temperature)
 							val seq = calculSEQ(dp, typeCapteur)
@@ -406,12 +414,12 @@ object SimpleApp extends Serializable {
 							val pr = 0.0
 							val qea = 0.0
 
-							(capteur, row.getString(8),row.getString(10), row.getTimestamp(0), temperature, hr, dpo1, dpe1, co2, dpo2, dpe2, dp, seq, Séqlogement, Qtotalextraitlogement, pr, qea, ha)
+							(capteur, row.getString(1),row.getString(2), row.getTimestamp(3), temperature, hr, dpo1, dpe1, co2, dpo2, dpe2, dp, seq, Séqlogement, Qtotalextraitlogement, pr, qea, ha)
 
 						})
 						//closeConnection(statement)
 						res
-					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue")
+					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue",)
 
 					//mesure = mesure.repartition(5)
 
