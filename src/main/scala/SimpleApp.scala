@@ -616,7 +616,7 @@ object SimpleApp extends Serializable {
 			brut = brut.withColumn("date", to_timestamp(col("Date"),"dd/MM/yyyy HH:mm"))
 			brut = brut.withColumn("capteur", lit(capteurBoitier) )
 
-			if (brut.count() > 0) {
+			/*if (brut.count() > 0) {
 				val date = brut.select("date").orderBy("date").first().getTimestamp(0)
 
 
@@ -626,7 +626,7 @@ object SimpleApp extends Serializable {
 				} catch {
 					case e: Exception => {}
 				}
-			}
+			}*/
 			brut.write
 				.mode(SaveMode.Append).jdbc(url, "brut_logement", connectionProperties)
 			return brut
@@ -731,6 +731,7 @@ object SimpleApp extends Serializable {
 				brut = brut.union(createGostMesure(date,dateMax,rs.getString("id_capteur")))
 			}
 
+
 			brut.write
 				.mode(SaveMode.Append).jdbc(url, "brut_logement", connectionProperties)
 
@@ -753,6 +754,13 @@ object SimpleApp extends Serializable {
 			val fileCapteur= filelist.filter(f => (""".+(162|093|088|182|177|223)+ le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileCaisson= filelist.filter(f => ("""caisson+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
 			val fileStation= filelist.filter(f => ("""Station météo+.+le """+dateString+"""+\.acq$""").r.findFirstIn(f.getName).isDefined)
+
+			try {
+				val statement = getConnection(url, connectionProperties)
+				statement.executeQuery(s"""delete from brut_logement where date >= timestamp '${date}' and date <= timestamp '${date}' + interval '1 day'""")
+			} catch {
+				case e: Exception => {}
+			}
 
 			for (file <- fileCapteur)
 			{
