@@ -352,11 +352,11 @@ object SimpleApp extends Serializable {
 					mesure = mesure.mapPartitions(iterator => {
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
-							println("capteur date =========================================="+capteur+date)
+
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-
+							println("capteur date =========================================="+capteur+date)
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
