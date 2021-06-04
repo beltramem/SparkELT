@@ -719,6 +719,7 @@ object SimpleApp extends Serializable {
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
 			df = df.withColumn("date", to_timestamp(col("date")))
 			df.show(1440)
+			df
 		}
 
 		def extractGostValue(date: Date): Unit =
