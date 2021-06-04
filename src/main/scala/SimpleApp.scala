@@ -342,9 +342,9 @@ object SimpleApp extends Serializable {
 				mesurecols -= "date"
 				mesurecols -= "id"
 
-				for (colname <- mesurecols) {
+				/*for (colname <- mesurecols) {
 					mesure = supprErreur(mesure, colname)
-				}
+				}*/
 
 				mesure.show(1);
 				mesure.repartition(1)
@@ -360,7 +360,7 @@ object SimpleApp extends Serializable {
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
 							rowbn = rowbn+1
-							println("############################################################## partition row"+partition+" "+rowbn)
+							//println("############################################################## partition row"+partition+" "+rowbn)
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
