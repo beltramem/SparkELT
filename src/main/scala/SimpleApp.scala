@@ -64,7 +64,7 @@ object SimpleApp extends Serializable {
 	{
 		val rs= statement.executeQuery("select avg(temperature) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement")
 		rs.first()
-		val temperature = rs.getDouble(0)
+		val temperature = rs.getDouble(1)
 		 return temperature
 	}
 
@@ -78,8 +78,8 @@ object SimpleApp extends Serializable {
 	def calculHrMoyen(capteur: String,statement: Statement): Double =
 	{
 		val rs= statement.executeQuery("select avg(hr) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement")
-		rs.next()
-		val hr = rs.getDouble(0)
+		rs.first()
+		val hr = rs.getDouble(1)
 		return hr
 	}
 
@@ -355,10 +355,7 @@ object SimpleApp extends Serializable {
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
-							println("capteur ================================================="+capteur)
-							val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
-							resultSetTemp.first()
-							val fctTemp = resultSetTemp.getDouble("fct1")
+
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
@@ -371,6 +368,10 @@ object SimpleApp extends Serializable {
 							var dpe1=0.0
 							var co2=0.0
 							if(reel==true) {
+								println("capteur ================================================="+capteur)
+								val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
+								resultSetTemp.first()
+								val fctTemp = resultSetTemp.getDouble("fct1")
 								temperature = calculTemperature(row.getDouble(1), fctTemp)
 								 hr = calculHr(row.getDouble(2), temperature)
 								dpo1 = calculDebitPosition1(row.getDouble(3), fctDp1, piece)
