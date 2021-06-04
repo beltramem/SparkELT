@@ -707,7 +707,6 @@ object SimpleApp extends Serializable {
 
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
-			date = calAddoneMin.getTime()
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
@@ -739,7 +738,7 @@ object SimpleApp extends Serializable {
 			println()
 			while (rs.next())
 			{
-				//brut = brut.union(createGostMesure(date,dateMax,rs.getString("id_capteur")))
+				brut = brut.union(createGostMesure(date,dateMax,rs.getString("id_capteur")))
 			}
 
 
