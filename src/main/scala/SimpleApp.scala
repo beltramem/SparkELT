@@ -62,8 +62,10 @@ object SimpleApp extends Serializable {
 
 	def calculTemperatureMoyenne(capteur: String,statement: Statement): Double =
 	{
-		val temperature= statement.executeQuery("select avg(temperature) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement").getDouble(0)
-		temperature
+		val rs= statement.executeQuery("select avg(temperature) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement")
+		rs.first()
+		val temperature = rs.getDouble(0)
+		 return temperature
 	}
 
 
@@ -75,8 +77,10 @@ object SimpleApp extends Serializable {
 
 	def calculHrMoyen(capteur: String,statement: Statement): Double =
 	{
-		val hr= statement.executeQuery("select avg(hr) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement").getDouble(0)
-		hr
+		val rs= statement.executeQuery("select avg(hr) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement")
+		rs.next()
+		val hr = rs.getDouble(0)
+		return hr
 	}
 
 
