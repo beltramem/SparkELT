@@ -374,7 +374,7 @@ object SimpleApp extends Serializable {
 						res
 					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue","piece","reel")
 
-					mesure = mesure.withColumn("temperature", when(col("reel") === false,mesure.select(avg($"temperature")).where(col("logement")===$"logement")))
+					mesure.createOrReplaceTempView("mesure_temp")
 
 
 
