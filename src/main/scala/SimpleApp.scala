@@ -352,6 +352,7 @@ object SimpleApp extends Serializable {
 					mesure = mesure.mapPartitions(iterator => {
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
+							println("capteur date =========================================="+capteur+date)
 							val capteur = row.getString(6)
 							val reel = row.getBoolean(11)
 							val piece = row.getString(9)
@@ -774,7 +775,9 @@ object SimpleApp extends Serializable {
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
 			date = c.getTime()
+
 			dateString = formatString.format(date)
+			println("date =============================="+dateString)
 		}
 
 
