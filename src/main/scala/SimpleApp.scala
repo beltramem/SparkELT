@@ -700,18 +700,22 @@ object SimpleApp extends Serializable {
 		{
 
 			var date = dateDebut
-			val calAddoneMin = Calendar.getInstance
 			var timestamp = new Timestamp(date.getTime)
+			var test=0
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
+			/*val calAddoneMin = Calendar.getInstance
+
+
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
-			date = calAddoneMin.getTime()
-			while (date != dateFin) {
+			date = calAddoneMin.getTime()*/
+			while (test!=86400) {
 				timestamp = new Timestamp(date.getTime)
 				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
-				calAddoneMin.setTime(date)
+				test = test+1
+				/*calAddoneMin.setTime(date)
 				calAddoneMin.add(Calendar.MINUTE,1)
-				date = calAddoneMin.getTime()
+				date = calAddoneMin.getTime()*/
 				println(date)
 			}
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
@@ -722,10 +726,11 @@ object SimpleApp extends Serializable {
 		def extractGostValue(date: Date): Unit =
 		{
 
-			val calAddOneDay = Calendar.getInstance
+			/*val calAddOneDay = Calendar.getInstance
 			calAddOneDay.setTime(date)
 			calAddOneDay.add(Calendar.DATE,1)
-			val dateMax = calAddOneDay.getTime()
+			val dateMax = calAddOneDay.getTime()*/
+			val dateMax = "2008-01-02 00:00:00.0"
 
 			var brut = spark.createDataFrame(spark.sparkContext.emptyRDD[Row], schmBrut)
 			brut = brut.withColumn("date", to_timestamp(col("date")))
