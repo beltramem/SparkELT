@@ -383,7 +383,7 @@ object SimpleApp extends Serializable {
 					mesure = mesure.withColumn("temperature", when(col("reel")===false,col("temperature_moyenne")).otherwise(col("temperature"))).drop("temperature_moyenne").drop("date_2").drop("logement_2")
 
 					val df_hr = spark.sql("select avg(hr) as hr_moyen ,logement as logement_2,date as date_2 from mesure_temp group by logement_2,date_2")
-					mesure = mesure.join(df_hr,mesure("logement")=== df_temp("logement_2") && mesure("date")===df_temp("date_2"))
+					mesure = mesure.join(df_hr,mesure("logement")===df_hr("logement_2") && mesure("date")===df_hr("date_2"))
 					mesure = mesure.withColumn("hr", when(col("reel")===false,col("hr_moyen")).otherwise(col("hr"))).drop("hr_moyen").drop("date_2").drop("logement_2")
 
 
