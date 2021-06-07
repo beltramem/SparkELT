@@ -380,11 +380,12 @@ object SimpleApp extends Serializable {
 					/*val temp_moyenne = udf[Double,Timestamp, String](calculTemperatureMoyenne)
 					mesure = mesure.withColumn("temperature",when(col("reel")===false,temp_moyenne(col("date"),col("logement"))))
 */
-					val df_temp = spark.sql("select * from mesure_temp")
+					val df_temp = spark.sql("select avg(temperature) as temperature ,logement as logement_2,date as date_2 from mesure_temp group_by logement,date")
 					df_temp.show(1)
 					//mesure = mesure.withColumn("temp_moyenne",avg("temperature"))
 
-					mesure.show(100)
+					mesure = mesure.withColumn("temperature", when(col("reel")===false,df_temp.select("temperature").where(col("date_2")===col("date"))))
+					//mesure.show(100)
 
 
 
