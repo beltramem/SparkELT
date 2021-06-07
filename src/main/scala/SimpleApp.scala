@@ -377,17 +377,15 @@ object SimpleApp extends Serializable {
 
 
 					mesure.createOrReplaceTempView("mesure_temp")
-					/*val temp_moyenne = udf[Double,Timestamp, String](calculTemperatureMoyenne)
-					mesure = mesure.withColumn("temperature",when(col("reel")===false,temp_moyenne(col("date"),col("logement"))))
-*/
-					val df_temp = spark.sql("select avg(temperature) as temperature_moyenne ,logement as logement_2,date as date_2 from mesure_temp group by logement_2,date_2")
-					df_temp.show(1)
-					//mesure = mesure.withColumn("temp_moyenne",avg("temperature"))
 
+					val df_temp = spark.sql("select avg(temperature) as temperature_moyenne ,logement as logement_2,date as date_2 from mesure_temp group by logement_2,date_2")
 					mesure = mesure.join(df_temp,mesure("logement")=== df_temp("logement_2") && mesure("date")===df_temp("date_2"))
 					mesure = mesure.withColumn("temperature", when(col("reel")===false,col("temperature_moyenne")).otherwise(col("temperature"))).drop("temperature_moyenne").drop("date_2").drop("logement_2")
-					//mesure = mesure.withColumn("temperature", when(col("reel")===false,df_temp.select("temperature").where(col("date_2")===col("date"))))
-					//mesure.show(100)
+
+					val df_hr = spark.sql("select avg(hr) as hr_moyen ,logement as logement_2,date as date_2 from mesure_temp group by logement_2,date_2")
+					mesure = mesure.join(df_hr,mesure("logement")=== df_temp("logement_2") && mesure("date")===df_temp("date_2"))
+					mesure = mesure.withColumn("hr", when(col("reel")===false,col("hr_moyen")).otherwise(col("hr"))).drop("hr_moyen").drop("date_2").drop("logement_2")
+
 
 
 
