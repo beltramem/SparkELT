@@ -117,24 +117,35 @@ object SimpleApp extends Serializable {
 		var dp2 = 0.0
 		if(!piece.contains("WC")) {
 			while (rs.next()) {
-				if (Dppoint >= rs.getDouble("borne_inf") && Dppoint < rs.getDouble(("borne_sup"))) {
-					if (rs.getDouble("valeur_defaut") <= 0) {
-						val fct1 = rs.getDouble("fct1")
-						val fct2 = rs.getDouble("fct2")
-						if (reel == true) {
-
+				if (reel == true) {
+					if (Dppoint >= rs.getDouble("borne_inf") && Dppoint < rs.getDouble(("borne_sup"))) {
+						if (rs.getDouble("valeur_defaut") <= 0) {
+							val fct1 = rs.getDouble("fct1")
+							val fct2 = rs.getDouble("fct2")
 							val fct3 = rs.getDouble("fct3")
 							val fct4 = rs.getDouble("fct4")
 							dp2 = fct1 + fct2 * brut + fct3 * math.pow(brut, 2) + fct4 * math.pow(brut, 3)
 						}
 						else {
-							dp2 = fct1 * hr + fct2
+							//println("============================================================================ else hr:" + hr)
+							dp2 = rs.getDouble("valeur_defaut")
 						}
 					}
-					else {
-						println("============================================================================ else hr:"+hr)
-						dp2 = rs.getDouble("valeur_defaut")
-					}
+				}
+				else
+					{
+						if (hr >= rs.getDouble("borne_inf") && hr < rs.getDouble(("borne_sup"))) {
+							if (rs.getDouble("valeur_defaut") <= 0) {
+								val fct1 = rs.getDouble("fct1")
+								val fct2 = rs.getDouble("fct2")
+								dp2 = fct1 * hr + fct2
+							}
+							else {
+								println("============================================================================ else hr:" + hr)
+								dp2 = rs.getDouble("valeur_defaut")
+							}
+
+						}
 				}
 			}
 		}
