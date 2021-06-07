@@ -64,7 +64,7 @@ object SimpleApp extends Serializable {
 	def calculTemperatureMoyenne(date: Timestamp, logement: String): Double =
 	{
 		val sqlContext = spark.sqlContext
-		val df_temp = sqlContext.sql("select avg(temperature)")
+		val df_temp = sqlContext.sql("select avg(temperature)as temperature from mesure_temp")
 		df_temp.show(1)
 		val temperature = df_temp.select("temperature").first().getDouble(0)
 		temperature
