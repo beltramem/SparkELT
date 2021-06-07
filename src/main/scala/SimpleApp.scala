@@ -61,6 +61,15 @@ object SimpleApp extends Serializable {
 		  temperature
 	}
 
+	def calculTemperatureMoyenne(date: Timestamp, logement: String): Double =
+	{
+		val sqlContext = spark.sqlContext
+		val df_temp = sqlContext.sql(s"""select avg(temperature) as temperature from mesure_temp where logement='${logement}' and date= timestamp '${date}'""")
+		df_temp.show(1)
+		val temperature = df_temp.select("temperature").first().getDouble(0)
+		temperature
+	}
+
 
 	def calculHr(brut: Double, temperature: Double ): Double =
 	{
@@ -755,13 +764,6 @@ object SimpleApp extends Serializable {
 
 		}
 
-		def calculTemperatureMoyenne(date: Timestamp, logement: String): Double =
-		{
-			val df_temp = spark.sql(s"""select avg(temperature) as temperature from mesure_temp where logement='${logement}' and date= timestamp '${date}'""")
-			df_temp.show()
-			val temperature = df_temp.select("temperature").first().getDouble(0)
-			temperature
-		}
 		var filelist = recursiveListFiles(new File("/home/n2m/Documents/TEST"))
 		//var filelist = recursiveListFiles(new File("/home/n2m/Documents/Test_erreur"))
 
