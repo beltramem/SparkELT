@@ -379,7 +379,7 @@ object SimpleApp extends Serializable {
 					val temp_moyenne = udf[Double,Timestamp, String](calculTemperatureMoyenne)
 					mesure = mesure.withColumn("temperature",when(col("reel")===false,temp_moyenne(col("date"),col("logement"))))
 
-
+					mesure.show(100)
 
 
 
