@@ -64,7 +64,7 @@ object SimpleApp extends Serializable {
 	def calculTemperatureMoyenne(date: Timestamp, logement: String): Double =
 	{
 		val df_temp = spark.sql("select * from mesure_temp")
-		df_temp.show(1)
+		//df_temp.show(1)
 		val temperature = df_temp.select("temperature").first().getDouble(0)
 		temperature
 	}
@@ -141,7 +141,7 @@ object SimpleApp extends Serializable {
 								dp2 = fct1 * hr + fct2
 							}
 							else {
-								println("============================================================================ else hr:" + hr)
+								//println("============================================================================ else hr:" + hr)
 								dp2 = rs.getDouble("valeur_defaut")
 							}
 
@@ -184,9 +184,9 @@ object SimpleApp extends Serializable {
 
 	def calculHumiditeAbsolue(hr:Double, temperature: Double): Double =
 	{
-		println("========================================= humidite absolue hr : temp  "+hr+":"+temperature)
+		//println("========================================= humidite absolue hr : temp  "+hr+":"+temperature)
 		val ha = (hr/100)*math.exp(18.8161-4110.34/(temperature+235))
-		println("========================================= ha: "+ha)
+		//println("========================================= ha: "+ha)
 		ha
 	}
 
@@ -344,7 +344,7 @@ object SimpleApp extends Serializable {
 
 		def transformeLoadLogement(date: Date):Unit =
 		{
-			println("fonction=====================================================================================================================================")
+			//println("fonction=====================================================================================================================================")
 				var query = s"""(select * from brut_logement bl join capteur cp on bl.capteur = cp.id_capteur  where date >= timestamp '${date}' - interval '1 minute' and date <  timestamp '${date}' + interval '1 day' order by date,capteur desc) as brut"""
 				var mesure = spark.read.jdbc(url, query, connectionProperties)
 
@@ -361,7 +361,7 @@ object SimpleApp extends Serializable {
 					mesure = supprErreur(mesure, colname)
 				}*/
 
-				mesure.show(1);
+				//mesure.show(1);
 				mesure.repartition(1)
 
 				if (mesure.count() >= 0) {
@@ -412,7 +412,7 @@ object SimpleApp extends Serializable {
 							val piece = row.getString(18)
 							val temperature = row.getDouble(4)
 							val hr = row.getDouble(5)
-							println("capteur date =========================================="+capteur+row.getTimestamp(3))
+							//println("capteur date =========================================="+capteur+row.getTimestamp(3))
 							val resultSetDp1 = statement.executeQuery(s"""(select fct1 from facteur_debit_position1 where capteur_facteur='${capteur}' ) """)
 							var fctDp1 = 0.0
 							while (resultSetDp1.next) {
@@ -462,7 +462,7 @@ object SimpleApp extends Serializable {
 					mesure = mesure.withColumn("somme_debits_extraits", when(col("type") === "Bouche", col("sum(debit_produit)")).otherwise(0.0)).drop("sum(debit_produit)")
 
 					//mesure = mesure.repartition(5)
-					println("========================================================================== fin  calcul somme debits extraits")
+					//println("========================================================================== fin  calcul somme debits extraits")
 
 					gb = mesure.groupBy("logement", "date").sum("surface_equivalente_ea").orderBy("date")
 					gb = gb.withColumnRenamed("logement", "logement_gb").withColumnRenamed("date", "date_gb")
@@ -470,7 +470,7 @@ object SimpleApp extends Serializable {
 					mesure = mesure.join(gb, mesure("logement") === gb("logement_gb") && mesure("date") === gb("date_gb"), "inner")
 					mesure = mesure.withColumn("somme_surface_equivalente", when(col("type") === "EA", col("sum(surface_equivalente_ea)")).otherwise(0.0)).drop("sum(surface_equivalente_ea)")
 
-					println("========================================================================== fin  calcul somme surface equivalente")
+					//println("========================================================================== fin  calcul somme surface equivalente")
 
 					//mesure.show(10)
 
@@ -748,11 +748,11 @@ object SimpleApp extends Serializable {
 				calAddoneMin.setTime(date)
 				calAddoneMin.add(Calendar.MINUTE,1)
 				date = calAddoneMin.getTime()
-				println(date)
+				//println(date)
 			}
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
 			df = df.withColumn("date", to_timestamp(col("date")))
-			df.show(1440)
+			//df.show(1440)
 			df
 		}
 
@@ -770,7 +770,7 @@ object SimpleApp extends Serializable {
 			val statement = getConnection(url, connectionProperties)
 			val rs = statement.executeQuery("select id_capteur from capteur where reel=false")
 
-			println()
+			//println()
 			while (rs.next())
 			{
 				brut = brut.union(createGostMesure(date,dateMax,rs.getString("id_capteur")))
@@ -831,7 +831,7 @@ object SimpleApp extends Serializable {
 			date = c.getTime()
 
 			dateString = formatString.format(date)
-			println("date =============================="+dateString)
+			//println("date =============================="+dateString)
 		}
 
 
