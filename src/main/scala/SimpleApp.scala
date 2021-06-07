@@ -61,12 +61,11 @@ object SimpleApp extends Serializable {
 		  temperature
 	}
 
-	def calculTemperatureMoyenne(capteur: String,statement: Statement): Double =
+	def calculTemperatureMoyenne(date: Timestamp, logement: String): Double =
 	{
-		val rs= statement.executeQuery("select avg(temperature) from mesure me join capteur cp on me.capteur=cp.id_capteur where reel = true group by extract(doy from date),logement")
-		rs.first()
-		val temperature = rs.getDouble(1)
-		 return temperature
+		val df_temp = spark.sql(s"""select avg(temperature) as temperature from mesure_temp""")
+		val temperature = df_temp.select("temperature").first().getDouble(0)
+		temperature
 	}
 
 
@@ -377,7 +376,8 @@ object SimpleApp extends Serializable {
 
 
 					mesure.createOrReplaceTempView("mesure_temp")
-					mesure = mesure.withColumn("temperature",when(col("reel")===false,spark.sql(s"""(select avg(temperature) as temperature from mesure_temp where logement=${col("logement")})""").select("temperature")))
+					val temp_moyenne = udf[Timestamp, String](calculTemperatureMoyenne)
+					mesure = mesure.withColumn("temperature",when(col("reel")===false,temp_moyenne(col("date"),col("logement"))))
 
 
 
