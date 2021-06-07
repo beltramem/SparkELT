@@ -1,3 +1,4 @@
+import org.apache
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SaveMode, SparkSession, types}
@@ -278,7 +279,7 @@ object SimpleApp extends Serializable {
 		def supprErreur(mesureErreur : DataFrame, colname: String): DataFrame =
 		{
 			//retrait des erreurs de température
-			val w = org.apache.spark.sql.expressions.Window.partitionBy().orderBy("date")
+			val w = apache.spark.sql.expressions.Window.partitionBy().orderBy("date")
 			//colonne contenant la valeur précédente
 			var mesure = mesureErreur.withColumn("prev_temp", lag(colname,1).over(w))
 			//remplacement des valeurs erronée si elle ne sont pas consécutives
@@ -374,11 +375,14 @@ object SimpleApp extends Serializable {
 						res
 					}).toDF("capteur","logement", "type", "date", "temperature", "hr", "debit_position_1", "debit_pression_1", "co2", "debit_position_2", "debit_pression_2", "debit_produit", "surface_equivalente_ea", "somme_surface_equivalente", "somme_debits_extraits", "pression_reelle", "debit_reelle", "humidite_absolue","piece","reel")
 
+
 					mesure.createOrReplaceTempView("mesure_temp")
+					mesure = mesure.withColumn("temperature",when(col("reel")===false,spark.sql(s"""select avg(temperature) from mesure_temp where logement=${col("logement")}""")))
 
 
 
-					import spark.implicits._
+
+
 					mesure = mesure.mapPartitions(iterator => {
 						var statement = getConnection(url, connectionProperties)
 						val res = iterator.map(row => {
