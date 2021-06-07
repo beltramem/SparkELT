@@ -489,7 +489,7 @@ object SimpleApp extends Serializable {
 								SeqLogement = fct1 + row.getDouble(11)
 							}
 
-							(row.getString(0), logement, row.getTimestamp(3), row.getDouble(4), row.getDouble(5), row.getDouble(6), row.getDouble(7), row.getDouble(8), row.getDouble(9), row.getDouble(10), row.getDouble(11), row.getDouble(12), SeqLogement, row.getDouble(13), row.getDouble(14), row.getDouble(15), row.getDouble(16))
+							(row.getString(0), logement, row.getTimestamp(3), row.getDouble(4), row.getDouble(5), row.getDouble(6), row.getDouble(7), row.getDouble(8), row.getDouble(9), row.getDouble(10), row.getDouble(11), row.getDouble(12), SeqLogement, row.getDouble(14), row.getDouble(15), row.getDouble(16), row.getDouble(17))
 						})
 						//closeConnection(statement)
 						res
