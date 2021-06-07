@@ -132,6 +132,7 @@ object SimpleApp extends Serializable {
 						}
 					}
 					else {
+						println("============================================================================ else hr:"+hr)
 						dp2 = rs.getDouble("valeur_defaut")
 					}
 				}
