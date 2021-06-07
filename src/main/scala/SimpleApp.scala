@@ -186,6 +186,7 @@ object SimpleApp extends Serializable {
 	{
 		println("========================================= humidite absolue hr : temp  "+hr+":"+temperature)
 		val ha = (hr/100)*math.exp(18.8161-4110.34/(temperature+235))
+		println("========================================= ha: "+ha)
 		ha
 	}
 
