@@ -377,7 +377,7 @@ object SimpleApp extends Serializable {
 
 
 					mesure.createOrReplaceTempView("mesure_temp")
-					mesure = mesure.withColumn("temperature",when(col("reel")===false,spark.sql(s"""(select avg(temperature) as temperature from mesure_temp where logement=${col("logement")}) as temperature""")))
+					mesure = mesure.withColumn("temperature",when(col("reel")===false,spark.sql(s"""(select avg(temperature) from mesure_temp where logement=${col("logement")}) as temperature""")))
 
 
 
