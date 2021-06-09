@@ -19,7 +19,9 @@ object SimpleApp extends Serializable {
 
 	// cette fonction nous permet de parcourir tout les sous dossiers et de répertorier tout les fichiers qui s'y trouve
 	// renvoie un tableauy contenant les fichiers contenu dans les sous dossiers
-	def recursiveListFiles(f: File): Array[File] = {
+	def recursiveListFiles(f: File): Array[File] =
+	{
+
 		val these = f.listFiles
 		these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
 	}
@@ -357,9 +359,9 @@ object SimpleApp extends Serializable {
 				mesurecols -= "date"
 				mesurecols -= "id"
 
-				/*for (colname <- mesurecols) {
+				for (colname <- mesurecols) {
 					mesure = supprErreur(mesure, colname)
-				}*/
+				}
 
 				//mesure.show(1);
 				mesure.repartition(1)
