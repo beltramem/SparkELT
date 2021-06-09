@@ -353,15 +353,7 @@ object SimpleApp extends Serializable {
 
 
 			if(mesure.count()>0) {
-				var mesurecolsA = mesure.columns
-				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
 
-				mesurecols -= "date"
-				mesurecols -= "id"
-
-				for (colname <- mesurecols) {
-					mesure = supprErreur(mesure, colname)
-				}
 
 				//mesure.show(1);
 				mesure.repartition(1)
@@ -658,6 +650,16 @@ object SimpleApp extends Serializable {
 			var brut = spark.read.option("delimiter", "\t").schema(schmBrut).csv(capteurFilePath).toDF
 			brut = brut.withColumn("date", to_timestamp(col("Date"),"dd/MM/yyyy HH:mm"))
 			brut = brut.withColumn("capteur", lit(capteurBoitier) )
+
+			var mesurecolsA = brut.columns
+			var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
+
+			mesurecols -= "date"
+			mesurecols -= "id"
+
+			for (colname <- mesurecols) {
+				brut = supprErreur(brut, colname)
+			}
 
 			/*if (brut.count() > 0) {
 				val date = brut.select("date").orderBy("date").first().getTimestamp(0)
