@@ -355,7 +355,7 @@ object SimpleApp extends Serializable {
 			if(mesure.count()>0) {
 
 
-				//mesure.show(1);
+				mesure.show(1);
 				mesure.repartition(1)
 
 				if (mesure.count() >= 0) {
