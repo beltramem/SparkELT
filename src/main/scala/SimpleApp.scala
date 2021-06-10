@@ -292,22 +292,6 @@ object SimpleApp extends Serializable {
 	def main(args: Array[String]){
 
 		import spark.implicits._
-		def supprErreur(mesureErreur : DataFrame, colname: String): DataFrame =
-		{
-			//retrait des erreurs de température
-			val w = apache.spark.sql.expressions.Window.partitionBy().orderBy("date")
-			//colonne contenant la valeur précédente
-			var mesure = mesureErreur.withColumn("prev_temp", lag(colname,1).over(w))
-			//remplacement des valeurs erronée si elle ne sont pas consécutives
-			mesure = mesure.withColumn("temp_adjust", when(col(colname).equalTo(61440),col("prev_temp")).otherwise(col(colname)))
-			//on ajoute une colonnes contenant null à chaque fois que la température et la température ajustée sont érronnée (il reste une erreur après le premier traitement)
-			mesure = mesure.withColumn("zeroNonZero", when((col(colname).equalTo(61440))&&(col("temp_adjust").equalTo(61440)),lit(null)).otherwise(col("temp_adjust")))
-			//on remplace chaque valeur null dans la colonne zeroNonZero par la première valeur non null précédente puis on remplace les valeurs de température par celle de la colonne zeroNonZero
-			mesure =mesure.withColumn(colname, last("zeroNonZero", ignoreNulls = true).over(w.orderBy("date").rowsBetween(Window.unboundedPreceding, 0))).drop("prev_temp").drop("temp_adjust").drop("zeroNonZero")
-
-			mesure
-
-		}
 
 
 		val schmBrut = StructType(
@@ -343,6 +327,35 @@ object SimpleApp extends Serializable {
 		connectionProperties.setProperty("driver", "org.postgresql.Driver")
 		connectionProperties.setProperty("user", "postgres")
 		connectionProperties.setProperty("password","zYRZ2rQy42t5")
+
+		def supprErreur(mesureErreur : DataFrame, colname: String): DataFrame =
+		{
+			//retrait des erreurs de température
+			val w = apache.spark.sql.expressions.Window.partitionBy().orderBy("date")
+			//colonne contenant la valeur précédente
+			var mesure = mesureErreur.withColumn("prev_temp", lag(colname,1).over(w))
+			//remplacement des valeurs erronée si elle ne sont pas consécutives
+			mesure = mesure.withColumn("temp_adjust", when(col(colname).equalTo(61440),col("prev_temp")).otherwise(col(colname)))
+			//on ajoute une colonnes contenant null à chaque fois que la température et la température ajustée sont érronnée (il reste une erreur après le premier traitement)
+			mesure = mesure.withColumn("zeroNonZero", when((col(colname).equalTo(61440))&&(col("temp_adjust").equalTo(61440)),lit(null)).otherwise(col("temp_adjust")))
+			//on remplace chaque valeur null dans la colonne zeroNonZero par la première valeur non null précédente puis on remplace les valeurs de température par celle de la colonne zeroNonZero
+			mesure =mesure.withColumn(colname, last("zeroNonZero", ignoreNulls = true).over(w.orderBy("date").rowsBetween(Window.unboundedPreceding, 0))).drop("prev_temp").drop("temp_adjust").drop("zeroNonZero")
+
+			if (mesure.first().anyNull)
+			{
+				var statement = getConnection(url, connectionProperties)
+				val resultSetTemp = statement.executeQuery(s"""(select ${colname}  FROM brut_logement WHERE date = (Select Max(date) FROM brut_logement WHERE date< '${mesure.first().getTimestamp(0)}' and ${colname}!=61440) and capteur=${mesure.first().getString(6)})""")
+				resultSetTemp.first()
+				val temp = resultSetTemp.getDouble(s"${colname}")
+				mesure = mesure.withColumn(colname,when(col(colname).equalTo(null),lit(temp)).otherwise(col(colname)))
+
+
+			}
+
+			mesure
+
+		}
+
 
 		def transformeLoadLogement(date: Date):Unit =
 		{
