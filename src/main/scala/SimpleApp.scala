@@ -373,6 +373,7 @@ object SimpleApp extends Serializable {
 								val resultSetTemp = statement.executeQuery(s"""(select fct1 from facteur_temperature where capteur_facteur='${capteur}' )""")
 								resultSetTemp.first()
 								val fctTemp = resultSetTemp.getDouble("fct1")
+								println("========================================================== capteur date:"+capteur+" "+date)
 								temperature = calculTemperature(row.getDouble(1), fctTemp)
 								hr = calculHr(row.getDouble(2), temperature)
 							}
