@@ -807,7 +807,7 @@ object SimpleApp extends Serializable {
 
 			try {
 				val statement = getConnection(url, connectionProperties)
-				statement.executeQuery(s"""delete from brut_logement where date >= timestamp '${date}' and date <= timestamp '${date}' + interval '1 day'""")
+				statement.executeQuery(s"""delete from brut_logement where date >= timestamp '${date}' and date <= timestamp '${date}' + interval '1 day' - interval '1 minute'""")
 			} catch {
 				case e: Exception => {}
 			}
