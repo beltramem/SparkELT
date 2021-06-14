@@ -758,18 +758,23 @@ object SimpleApp extends Serializable {
 			var timestamp = new Timestamp(date.getTime)
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
 			val calAddoneMin = Calendar.getInstance
-
+			val statement = getConnection(url, connectionProperties)
 
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
 			date = calAddoneMin.getTime()
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
-				seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
-				calAddoneMin.setTime(date)
-				calAddoneMin.add(Calendar.MINUTE,1)
-				date = calAddoneMin.getTime()
-				//println(date)
+				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement where date=${timestamp}""")
+				if(rs.next()) {
+					if(rs.getDouble("cc")>0.0) {
+						seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
+					}
+				}
+						calAddoneMin.setTime(date)
+						calAddoneMin.add(Calendar.MINUTE, 1)
+						date = calAddoneMin.getTime()
+						//println(date)
 			}
 			var df = seq.toDF("date","temperature","hr","debit_position-1","debit_pression_1","co2","capteur")
 			df = df.withColumn("date", to_timestamp(col("date")))
@@ -792,11 +797,9 @@ object SimpleApp extends Serializable {
 			val rs = statement.executeQuery("select id_capteur from capteur where reel=false")
 
 			//println()
-			while (rs.next())
-			{
-				brut = brut.union(createGostMesure(date,dateMax,rs.getString("id_capteur")))
+			while (rs.next()) {
+				brut = brut.union(createGostMesure(date, dateMax, rs.getString("id_capteur")))
 			}
-
 
 			brut.write
 				.mode(SaveMode.Append).jdbc(url, "brut_logement", connectionProperties)
