@@ -759,13 +759,19 @@ object SimpleApp extends Serializable {
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
 			val calAddoneMin = Calendar.getInstance
 			val statement = getConnection(url, connectionProperties)
+			val rs = statement.executeQuery(s"""select logement from capteur where id_capteur=${capteur}""")
+			var logement= ""
+			if (rs.next())
+				{
+					logement = rs.getString("logement")
+				}
 
 			calAddoneMin.setTime(date)
 			calAddoneMin.add(Calendar.MINUTE,1)
 			date = calAddoneMin.getTime()
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
-				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement where date=${timestamp}""")
+				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement where date=${timestamp} and logment=${logement}""")
 				if(rs.next()) {
 					if(rs.getDouble("cc")>0.0) {
 						seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
