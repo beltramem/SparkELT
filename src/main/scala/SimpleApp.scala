@@ -346,7 +346,7 @@ object SimpleApp extends Serializable {
 				var statement = getConnection(url, connectionProperties)
 				val resultSetTemp = statement.executeQuery(s"""(select ${colname}  FROM brut_logement WHERE date = (Select Max(date) FROM brut_logement WHERE date< '${mesure.first().getTimestamp(0)}' and ${colname}!=61440) and capteur=${mesure.first().getString(6)})""")
 				resultSetTemp.first()
-				val temp = resultSetTemp.getDouble(s"${colname}")
+				val temp = resultSetTemp.getDouble(s"""${colname}""")
 				mesure = mesure.withColumn(colname,when(col(colname).equalTo(null),lit(temp)).otherwise(col(colname)))
 
 
@@ -550,16 +550,6 @@ object SimpleApp extends Serializable {
 			var mesure = spark.read.jdbc(url, query, connectionProperties)
 
 			if(mesure.count()>0) {
-				var mesurecolsA = mesure.columns
-				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
-
-				mesurecols -= "date"
-				mesurecols -= "id"
-
-
-				for (colname <- mesurecols) {
-					mesure = supprErreur(mesure, colname)
-				}
 
 				import spark.implicits._
 				mesure = mesure.mapPartitions(iterator => {
@@ -608,15 +598,6 @@ object SimpleApp extends Serializable {
 			var mesure = spark.read.jdbc(url, query, connectionProperties)
 
 			if(mesure.count()>0) {
-				var mesurecolsA = mesure.columns
-				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
-
-				mesurecols -= "date"
-				mesurecols -= "id"
-
-				for (colname <- mesurecols) {
-					mesure = supprErreur(mesure, colname)
-				}
 
 				import spark.implicits._
 				mesure = mesure.mapPartitions(iterator => {
@@ -703,7 +684,18 @@ object SimpleApp extends Serializable {
 
 
 			if (brut.count() > 0.0){
-			val date = brut.select("date").orderBy("date").first().getTimestamp(0)
+				var mesurecolsA = brut.columns
+				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
+
+				mesurecols -= "date"
+				mesurecols -= "id"
+
+				for (colname <- mesurecols) {
+					brut = supprErreur(brut, colname)
+				}
+
+
+				val date = brut.select("date").orderBy("date").first().getTimestamp(0)
 
 			try {
 				val statement = getConnection(url, connectionProperties)
@@ -731,6 +723,17 @@ object SimpleApp extends Serializable {
 			brut = brut.withColumn("capteur", lit(capteurBoitier) )
 
 			if (brut.count() > 0.0) {
+
+				var mesurecolsA = brut.columns
+				var mesurecols = collection.mutable.ArrayBuffer(mesurecolsA: _*)
+
+				mesurecols -= "date"
+				mesurecols -= "id"
+
+
+				for (colname <- mesurecols) {
+					brut = supprErreur(brut, colname)
+				}
 				val date = brut.select("date").orderBy("date").first().getTimestamp(0)
 
 
