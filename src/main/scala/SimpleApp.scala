@@ -224,10 +224,10 @@ object SimpleApp extends Serializable {
 		connection.close()
 	}
 
-	def calculOrientation(brut:Double ): Double=
+	def calculOrientation(brut:Double ): Int=
 	{
-		val orientation = (brut/1023)*360
-		orientation
+		val orientation = Math.round((brut/1023)*360)
+		orientation.toInt
 	}
 
 	def calculVitesseVent(brut:Double): Double=
@@ -837,7 +837,7 @@ object SimpleApp extends Serializable {
 				case e: Exception => {}
 			}
 
-			for (file <- fileCapteur)
+			/*for (file <- fileCapteur)
 			{
 				extractLogement(file)
 			}
@@ -847,14 +847,14 @@ object SimpleApp extends Serializable {
 			if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
 			}
-
+*/
 			if(fileStation.length>0) {
 				extractStation(fileStation(0))
 			}
 
-			transformeLoadLogement(date)
+			//transformeLoadLogement(date)
 			transformeLoadStation(date)
-			transformeLoadCaisson(date)
+			//transformeLoadCaisson(date)
 
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
