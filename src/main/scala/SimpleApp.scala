@@ -325,8 +325,8 @@ object SimpleApp extends Serializable {
 		val url = "jdbc:postgresql://127.0.0.1:5432/anjos"
 		val connectionProperties = new Properties()
 		connectionProperties.setProperty("driver", "org.postgresql.Driver")
-		connectionProperties.setProperty("user", "postgres")
-		connectionProperties.setProperty("password","zYRZ2rQy42t5")
+		connectionProperties.setProperty("user", "")
+		connectionProperties.setProperty("password","")
 
 		def supprErreur(mesureErreur : DataFrame, colname: String): DataFrame =
 		{
