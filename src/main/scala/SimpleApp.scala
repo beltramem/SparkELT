@@ -603,12 +603,13 @@ object SimpleApp extends Serializable {
 						val vitesseVent = calculVitesseVent(row.getDouble(4))
 						val co2 = calculCo2(row.getDouble(5),"Station")
 						val bousole = orientationBousole(orientation)
+						val tranche_vent = calculTrancheVent(vitesseVent)
 
-						(row.getTimestamp(0), temperature, hr, orientation, vitesseVent, co2, bousole,capteur)
+						(row.getTimestamp(0), temperature, hr, orientation, vitesseVent, co2, bousole,capteur,tranche_vent)
 					})
 					//closeConnection(statement)
 					res
-				}).toDF("date","temperature","hr","orientation","vitesse_vent","co2","bousole","capteur")
+				}).toDF("date","temperature","hr","orientation","vitesse_vent","co2","bousole","capteur","tranche_vent")
 
 				val timestamp = new java.sql.Timestamp(date.getTime)
 
