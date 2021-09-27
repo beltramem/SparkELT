@@ -322,11 +322,48 @@ object SimpleApp extends Serializable {
 				StructField("capteur", DoubleType, nullable= true):: Nil)
 
 		// connect to the database named "anjos" on port 5432 of localhost
-		val url = "jdbc:postgresql://127.0.0.1:5432/anjos"
+		val url = "jdbc:postgresql://127.0.0.1:5433/anjos"
 		val connectionProperties = new Properties()
 		connectionProperties.setProperty("driver", "org.postgresql.Driver")
-		connectionProperties.setProperty("user", "postgres")
-		connectionProperties.setProperty("password","zYRZ2rQy42t5")
+		connectionProperties.setProperty("user", "supeset")
+		connectionProperties.setProperty("password","superset")
+
+		def calculTrancheVent(vitesse_vent: Double): String =
+		{
+			val trancheVitesseVent = "";
+			if(vitesse_vent<0.5)
+			{
+				trancheVitesseVent = "<0.5 m/s";
+			}
+			else if(vitesse_vent<2)
+			{
+				trancheVitesseVent = "0.5-2 m/s";
+			}
+			else if(vitesse_vent<4)
+			{
+				trancheVitesseVent = "2-4 m/s";
+			}
+			else if(vitesse_vent<6)
+			{
+				trancheVitesseVent = "4-6 m/s";
+			}
+			else if(vitesse_vent<8)
+			{
+				trancheVitesseVent = "6-8 m/s";
+			}
+			else if(vitesse_vent<10)
+			{
+				trancheVitesseVent = "8-10 m/s";
+			}
+			else
+			{
+				trancheVitesseVent = ">10 m/s";
+			}
+
+			trancheVitesseVent
+
+
+		}
 
 		def supprErreur(mesureErreur : DataFrame, colname: String): DataFrame =
 		{
@@ -566,12 +603,13 @@ object SimpleApp extends Serializable {
 						val vitesseVent = calculVitesseVent(row.getDouble(4))
 						val co2 = calculCo2(row.getDouble(5),"Station")
 						val bousole = orientationBousole(orientation)
+						val tranche = calculTranche(vitesseVent)
 
-						(row.getTimestamp(0), temperature, hr, orientation, vitesseVent, co2, bousole,capteur)
+						(row.getTimestamp(0), temperature, hr, orientation, vitesseVent, co2, bousole,capteur,tranche)
 					})
 					//closeConnection(statement)
 					res
-				}).toDF("date","temperature","hr","orientation","vitesse_vent","co2","bousole","capteur")
+				}).toDF("date","temperature","hr","orientation","vitesse_vent","co2","bousole","capteur","tranche_vent")
 
 				val timestamp = new java.sql.Timestamp(date.getTime)
 
