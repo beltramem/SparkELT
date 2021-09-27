@@ -330,7 +330,7 @@ object SimpleApp extends Serializable {
 
 		def calculTrancheVent(vitesse_vent: Double): String =
 		{
-			val trancheVitesseVent = "";
+			var trancheVitesseVent = "";
 			if(vitesse_vent<0.5)
 			{
 				trancheVitesseVent = "<0.5 m/s";
