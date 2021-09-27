@@ -789,7 +789,7 @@ object SimpleApp extends Serializable {
 			return brut
 		}
 
-		def createGostMesure(dateDebut : Date,dateFin : Date, capteur: String): DataFrame =
+		def createGostMesure(dateDebut : Date,dateFin : Date, capteur:String): DataFrame =
 		{
 
 			var date = dateDebut
@@ -797,7 +797,7 @@ object SimpleApp extends Serializable {
 			var seq = Seq((timestamp, 0, 0, 0, 0, 0, capteur))
 			val calAddoneMin = Calendar.getInstance
 			val statement = getConnection(url, connectionProperties)
-			val rs = statement.executeQuery(s"""select logement from capteur where id_capteur=${capteur}""")
+			val rs = statement.executeQuery(s"""select logement from capteur where id_capteur='${capteur}'""")
 			var logement= ""
 			if (rs.next())
 				{
