@@ -809,6 +809,7 @@ object SimpleApp extends Serializable {
 			date = calAddoneMin.getTime()
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
+				println(timestamp)
 				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement where date=${timestamp} and logment='${logement}'""")
 				if(rs.next()) {
 					if(rs.getDouble("cc")>0.0) {
