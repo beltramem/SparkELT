@@ -328,7 +328,7 @@ object SimpleApp extends Serializable {
 		connectionProperties.setProperty("user", "superset")
 		connectionProperties.setProperty("password","superset")
 
-		def calculTrancheVent(vitesse_vent: Double): String =
+		def calculTrancheVent(vitesse_vent:Double):String =
 		{
 			var trancheVitesseVent = "";
 			if(vitesse_vent<0.5)
