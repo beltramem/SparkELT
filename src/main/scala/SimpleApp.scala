@@ -325,7 +325,7 @@ object SimpleApp extends Serializable {
 		val url = "jdbc:postgresql://127.0.0.1:5433/anjos"
 		val connectionProperties = new Properties()
 		connectionProperties.setProperty("driver", "org.postgresql.Driver")
-		connectionProperties.setProperty("user", "supeset")
+		connectionProperties.setProperty("user", "superset")
 		connectionProperties.setProperty("password","superset")
 
 		def calculTrancheVent(vitesse_vent: Double): String =
