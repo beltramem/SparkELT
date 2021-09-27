@@ -810,7 +810,7 @@ object SimpleApp extends Serializable {
 			while (date!=dateFin) {
 				timestamp = new Timestamp(date.getTime)
 				println(timestamp)
-				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement where date='${timestamp}' and logement='${logement}'""")
+				val rs = statement.executeQuery(s"""select count(*) as cc from brut_logement bl join capteur cp on cp.id_capteur=bl.capteur where date='${timestamp}' and cp.logement='${logement}'""")
 				if(rs.next()) {
 					if(rs.getDouble("cc")>0.0) {
 						seq = seq ++ Seq((timestamp, 0, 0, 0, 0, 0, capteur))
