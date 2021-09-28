@@ -226,7 +226,11 @@ object SimpleApp extends Serializable {
 
 	def calculOrientation(brut:Double ): Int=
 	{
-		val orientation = Math.round((brut/1023)*360)
+		var orientation = Math.round((brut/1023)*360)
+		if(orientation >= 360)
+			{
+				orientation = 0;
+			}
 		orientation.toInt
 	}
 
