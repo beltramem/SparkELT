@@ -880,6 +880,7 @@ object SimpleApp extends Serializable {
 				case e: Exception => {}
 			}
 
+			/*
 			for (file <- fileCapteur)
 			{
 				extractLogement(file)
@@ -889,15 +890,15 @@ object SimpleApp extends Serializable {
 
 			if(fileCaisson.length>0) {
 				extractCaisson(fileCaisson(0))
-			}
+			}*/
 
 			if(fileStation.length>0) {
 				extractStation(fileStation(0))
 			}
 
-			transformeLoadLogement(date)
+			//transformeLoadLogement(date)
 			transformeLoadStation(date)
-			transformeLoadCaisson(date)
+			//transformeLoadCaisson(date)
 
 			c.setTime(date)
 			c.add(Calendar.DATE,1)
